@@ -1,0 +1,1 @@
+print("Inicjalizacja Kalkulatora v1.0")
