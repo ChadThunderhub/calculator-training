@@ -15,66 +15,49 @@ class Logic:
         a = self.input_handler.get_input("Podaj pierwszą liczbę")
         b = self.input_handler.get_input("Podaj drugą liczbę")
         return a, b
-    def set_numbers(self, a, b):
-        self.a = a
-        self.b = b
+    
     def clear_screen(self):
         os.system('cls' if os.name == "nt" else "clear")
         
     def execute(self):
-        self.clear_screen()
-        Menu.show()
-        
-        choice = self.input_handler.get_input("Wprowadź numer działania")
-        
+        while True:
+            self.clear_screen()
+            Menu.show()
+            
+            choice = self.input_handler.get_input("Wprowadź numer działania")
+            
+            if choice == 5:
+                print("\nDziękujemy za skorzystanie z kalkulatora!")
+                sys.exit(0)
+            
+            if choice not in [1, 2, 3, 4]:
+                self.clear_screen()
+                print(f"\nNieprawidłowy wybór. Proszę wybrać liczbę od 1 do 5.\n")
+                input("Wciśnij Enter, aby kontynuować") 
+                continue
+            
 
-        if choice == 1:
             a, b = self.get_numbers()
-            self.set_numbers(a, b)
-            operation = Addition(a, b)
-            result = operation.calculate()
-            self.output_handler.display_result(result)
-
-        elif choice == 2:
-            a, b = self.get_numbers()
-            self.set_numbers(a, b)
-            operation = Subtraction(a, b)
-            result = operation.calculate()
-            self.output_handler.display_result(result)
-
-        elif choice == 3:
-            a, b = self.get_numbers()
-            self.set_numbers(a, b)
-            operation = Multiplication(a, b)
-            result = operation.calculate()
-            self.output_handler.display_result(result)
-
-        elif choice == 4:
-            a, b = self.get_numbers()
-            self.set_numbers(a, b)
-            operation = Division(a, b)
+                
+            match choice:
+                case 1: 
+                    operation = Addition(a, b)
+                case 2: 
+                    operation = Subtraction(a, b)
+                case 3: 
+                    operation = Multiplication(a, b)
+                case 4:
+                    operation = Division(a, b)
+                case _:
+                    print(f"\nNieprawidłowy wybór.\n")
+                
             try:
                 result = operation.calculate()
                 self.output_handler.display_result(result)
             except ValueError as e:
                 print(e)
-                
-        elif choice == 5:
-            print("\nDziękujemy za skorzystanie z kalkulatora!")
-            sys.exit(0)
-
-        else:
-            print(f"\nNieprawidłowy wybór.\n")
-            print("Czy chcesz spróbować ponownie? 0 - Nie, 1 - Tak")
-            retry = self.input_handler.get_input("Wprowadź numer")
-            if retry == 1:
-                self.clear_screen()
-                self.execute()
-            
-        exit = self.input_handler.get_input("\nCzy chcesz zakończyć program? 0 - Nie, 1 - Tak")
-        if exit == 1:
-            print("\nDziękujemy za skorzystanie z kalkulatora!")
-            sys.exit(0)
-        else:
-            self.clear_screen()
-            self.execute()
+                                
+            exit_choice = self.input_handler.get_input("\nCzy chcesz zakończyć program? 1 - Tak, dowolna liczba - Nie")
+            if exit_choice == 1:
+                print("\nDziękujemy za skorzystanie z kalkulatora!")
+                sys.exit(0)
