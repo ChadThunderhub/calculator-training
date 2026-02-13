@@ -7,3 +7,4 @@ class Menu:
         print("2. Odejmowanie")
         print("3. Mnożenie")
         print("4. Dzielenie")
+        print("5. Wyjście\n")
